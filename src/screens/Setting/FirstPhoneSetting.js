@@ -1,0 +1,65 @@
+/* eslint-disable react-native/no-inline-styles */
+import React, {Component, useState} from 'react';
+import {connect} from 'react-redux';
+import {commonStyle as cs} from './../../styles/common/styles';
+import {View, Text} from 'react-native';
+import {InputField, Button} from '../../components/widgets';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {apiActions} from './../../actions';
+const PhoneSetting1 = props => {
+  const [mobile, updateMobile] = useState('');
+  const editMobile = () => {
+    updateMobile(mobile);
+    const {dispatch} = props;
+    dispatch(apiActions.editMobile(mobile));
+  };
+  return (
+    <View style={cs.mainContainer}>
+      <View style={cs.textLoginContainer}>
+        <Text style={cs.titleSettingPage}>Nieuw telefoonnummer</Text>
+        <Text style={cs.subTitleSettingPage}>
+          Schrijf hieronder je nieuwe telefoonnummer op.
+        </Text>
+        <View style={cs.settingInputWrapper}>
+          <InputField
+            value={mobile}
+            keyboardType={'numeric'}
+            onSubmit={() => mobile.focus()}
+            onChange={mobile => updateMobile(mobile)}
+          />
+        </View>
+        <View style={{alignItems: 'center', marginTop: 20}}>
+          <Text style={{color: '#31455E', fontSize: 13}}>
+            Wij sturen je een e-mail om
+          </Text>
+          <Text style={{color: '#31455E', fontSize: 13}}>
+            de verandering te bevestigen{' '}
+          </Text>
+        </View>
+        <View style={cs.columnContainer}>
+          <View>
+            <Button
+              onClick={() => editMobile()}
+              name="OPSLAAN"
+              colorButton="#5467fd"
+            />
+            <View style={cs.nextIconWrapper}>
+              <Icon
+                name="chevron-right"
+                color="white"
+                size={12}
+                style={{marginLeft: 8, marginTop: 5}}
+              />
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const mapStateToProps = state => {
+  return {};
+};
+
+export default connect(mapStateToProps)(PhoneSetting1);
